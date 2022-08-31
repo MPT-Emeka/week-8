@@ -29,10 +29,20 @@ app.post("/signup", async (req, res) =>
 })
 
 
-app.post("/login", async (req, res) =>
+app.post("/login 2", async (req, res) =>
 {
-    const { email, password } = 
+    const reqBody = req.body;
+    console.log(reqBody, req.body);
+    const user = new User(reqBody);
+    console.log(user);
+    await user.save();
+    return res.status(200).send(user);
 })
+
+// app.post("/login", async (req, res) =>
+// {
+//     const { email, password } = 
+// })
 
 const StartServer = async () =>
 {
