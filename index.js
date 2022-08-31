@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 
 app.use(express.json());
 
-const Database = "mongodb+srv://admin:admin@cluster0.wfe6x0s.mongodb.net/TestDB?retryWrites=true&w=majority"
+// const Database = add connection string here.
 
-// mongodb+srv://admin:<password>@cluster0.wfe6x0s.mongodb.net/?retryWrites=true&w=majority
+
 
 // app.get('/changePassword', async (req, res) =>
 // {   
