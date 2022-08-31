@@ -1,22 +1,24 @@
-const exprss = require('express')
+const express = require('express')
 const PORT = 3000;
 const User = require('./User');
 const app = express();
-const mongoose = require('mongoose'); 
-const {default: mongoose} = require('mongoose');
+const mongoose = require('mongoose');
 
-app.use(express)
+// const {default: mongoose} = require('mongoose');
+
+app.use(express.json());
+
 const Database = "mongodb+srv://admin:admin@cluster0.wfe6x0s.mongodb.net/TestDB?retryWrites=true&w=majority"
 
 // mongodb+srv://admin:<password>@cluster0.wfe6x0s.mongodb.net/?retryWrites=true&w=majority
 
-app.get('/', (req, res) =>
-{
-    return
-}
-)
-
- 
+// app.get('/changePassword', async (req, res) =>
+// {   
+//     const { password } = req.body;
+//     const user = await User.findOne()
+//     return
+// }
+// )
 
 app.post("/signup", async (req, res) =>
 {
@@ -28,10 +30,24 @@ app.post("/signup", async (req, res) =>
     return res.status(200).send(user);
 })
 
-// app.post("/login", async (req, res) =>
-// {
-//     const { email, password } = 
-// })
+app.put("/update", async (req, res) =>
+{
+    const findUser = await User.findById(req.body.id);
+    findUser.name = req.body.name;
+    findUser.email = req.body.email;
+    findUser.password = req.body.password;
+    await findUser.save();
+
+    return res.status(201).send(findUser);
+})
+
+app.post("/login", async (req, res) =>
+{
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password });
+    if(!user) return res.status(404).send("User not found");
+    return res.status(200).send(user);
+})
 
 const StartServer = async () =>
 {
@@ -44,9 +60,9 @@ const StartServer = async () =>
                 console.log(`Server is running on port ${PORT}`);
             })
             
-    } catch (error) {
+        } catch (error) {
         console.log(error)
-    }
+        }
 }
 
-StartServer()
+StartServer();
