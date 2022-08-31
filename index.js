@@ -16,6 +16,8 @@ app.get('/', (req, res) =>
 }
 )
 
+ 
+
 app.post("/signup", async (req, res) =>
 {
     const reqBody = req.body;
@@ -25,6 +27,7 @@ app.post("/signup", async (req, res) =>
     await user.save();
     return res.status(200).send(user);
 })
+
 
 app.post("/login", async (req, res) =>
 {
